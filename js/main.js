@@ -1,24 +1,28 @@
-import snakeActually from './modules/monitor.js'
+import { snakeInfo } from './modules/snakeInfo.js'
 
-const allSankes = document.querySelectorAll('.snake')
-const headSnake = document.querySelector('#head')
-const bodySnakes = document.querySelectorAll('.body')
+const allSanke = document.querySelectorAll('.snake')
+const snakeHead = document.querySelector('#head')
+const snakeBody = document.querySelectorAll('.body')
 
-const initialConfig = {
-    headSnakeC: "2 / 3" 
+
+// Initial config
+snakeHead.style.gridColumn = "2 / 3" 
+
+
+// Change the move
+function changeMove(){
+
 }
 
+// Move
+function move(){
 
-function movement(){
-    headSnake.style.gridColumn = initialConfig.headSnakeC
+
     setInterval(()=>{
-        
-        headSnake.style.gridColumnStart = String(Number(snakeActually.head.start)+1)
-        headSnake.style.gridColumnEnd = String(Number(snakeActually.head.end)+1)
+        snakeHead.style.gridColumnStart = Number(snakeInfo(snakeHead).head.column.start) + 1
+        snakeHead.style.gridColumnEnd = Number(snakeInfo(snakeHead).head.column.end) + 1   
 
-        console.log('ok', snakeActually.head.geral)
-    } ,700)
+        console.log('moving...')
+    } ,300)
 }
-
-//movement()
-
+//move();
