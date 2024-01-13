@@ -6,7 +6,6 @@ const allSnake = document.querySelectorAll('.snake')
 const snakeHead = document.querySelector('#head')
 const snakeBody = document.querySelectorAll('.body')
 
-console.log(snakeBody)
 
 // Initial config
 setInitialConfig(snakeHead, snakeBody)
@@ -22,11 +21,15 @@ function move(){
     snakeHead.style.gridColumnStart = Number(snakeInfo(snakeHead).head.column.start) + 1
     snakeHead.style.gridColumnEnd = Number(snakeInfo(snakeHead).head.column.end) + 1   
 
+    let count = 0;
     // Move the body
-    for ( let i in snakeBody ){
-        snakeBody[i].style.gridColumn = `${ snakeInfo() }`
+    for ( let i of snakeBody ){
+        console.log(snakeBody)
+        snakeBody[count].style.gridColumnStart = Number(snakeInfo(null, snakeBody).body.column.start[count])+1
+        snakeBody[count].style.gridColumnEnd = Number(snakeInfo(null, snakeBody).body.column.end[count])+1
+        
+        count++;
     }
-
 }
 
 
@@ -34,16 +37,14 @@ const gameInit = ()=>{
     setInterval(()=>{
         move()
 
-        console.log(snakeInfo(snakeHead, snakeBody, allSnake))
         console.log('moving...')
 
 
-    } ,10000/*300*/)
+    } ,350/*300*/)
 
 }
 
-console.log(snakeInfo(snakeHead, snakeBody, allSnake))
 // Move
 
-//gameInit();
+// gameInit();
 
