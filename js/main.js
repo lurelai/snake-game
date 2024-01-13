@@ -1,50 +1,53 @@
 import { snakeInfo } from './modules/snakeInfo.js'
-import { setInitialConfig } from './modules/initialConfig.js'
-
+import { config } from './modules/config.js'
+import { move } from './modules/move.js'
+import { futureHistory } from './modules/futureHistory.js'
 
 const allSnake = document.querySelectorAll('.snake')
 const snakeHead = document.querySelector('#head')
 const snakeBody = document.querySelectorAll('.body')
 
-
+console.log(snakeBody)
 // Initial config
-setInitialConfig(snakeHead, snakeBody)
-
-
-// Move and Change the move
-function changeMove(){
-
-}
-
-function move(){
-    // Move the head
-    snakeHead.style.gridColumnStart = Number(snakeInfo(snakeHead).head.column.start) + 1
-    snakeHead.style.gridColumnEnd = Number(snakeInfo(snakeHead).head.column.end) + 1   
-
-    let count = 0;
-    // Move the body
-    for ( let i of snakeBody ){
-        console.log(snakeBody)
-        snakeBody[count].style.gridColumnStart = Number(snakeInfo(null, snakeBody).body.column.start[count])+1
-        snakeBody[count].style.gridColumnEnd = Number(snakeInfo(null, snakeBody).body.column.end[count])+1
-        
-        count++;
-    }
-}
-
+config.setInitialConfig(snakeHead, snakeBody)
 
 const gameInit = ()=>{
+    let itMove = false
+    let lastKeyDirection = null
+
+    document.addEventListener('keydown', (e)=>{
+        console.log(e.key, config.possibleKeys[e.key], lastKeyDirection) 
+        // Verify if its the first time that the user are trying to move the snake
+        if( !itMove && e.key !== "ArrowRight" ){
+            lastKeyDirection = config.possibleKeys[e.key] 
+            itMove = true;
+
+            futureHistory.push(config.possibleKeys[e.key])
+
+            console.log('first time', config.possibleKeys[e.key] )
+        }
+    
+        else if ( itMove && lastKeyDirection !== config.possibleKeys[e.key] ){
+            lastKeyDirection = config.possibleKeys[e.key] 
+
+            futureHistory.push(config.possibleKeys[e.key])
+            console.log('ok')
+        }
+
+        console.log(futureHistory)
+    })
+
+
     setInterval(()=>{
-        move()
+        if (!itMove)
+           move('right', snakeHead, snakeBody, snakeInfo)
 
-        console.log('moving...')
-
-
+        else 
+            move(lastKeyDirection, snakeHead, snakeBody, snakeInfo)
+        
+       
     } ,350/*300*/)
-
 }
 
-// Move
-
-// gameInit();
+gameInit();
 
