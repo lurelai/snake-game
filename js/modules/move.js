@@ -1,4 +1,4 @@
-export function move(moveTo, snakeHead, snakeBody, snakeInfo, history){
+export function move(moveTo, snakeHead, snakeBody, snakeInfo, toMove){
     if(moveTo === "right"){
         // Move the head to right
         snakeHead.style.gridColumnStart = Number(snakeInfo(snakeHead, null).head.column.start) + 1
@@ -20,6 +20,10 @@ export function move(moveTo, snakeHead, snakeBody, snakeInfo, history){
         snakeHead.style.gridRowStart = Number(snakeInfo(snakeHead, null).head.row.start) - 1
         snakeHead.style.gridRowEnd = Number(snakeInfo(snakeHead, null).head.row.end) - 1
         
+        if( toMove ){
+            toMove[0][1].style.gridRowStart = Number(snakeInfo(snakeHead, null).head.row.start) - 1
+            toMove[0][1].style.gridRowEnd = Number(snakeInfo(snakeHead, null).head.row.end) - 1
+        }
     }
 
 

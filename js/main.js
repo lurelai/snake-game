@@ -13,24 +13,23 @@ config.setInitialConfig(snakeHead, snakeBody)
 
 const gameInit = ()=>{
     let itMove = false
-    let lastKeyDirection = null
+    let lastKeyDirection = 'right' 
 
     document.addEventListener('keydown', (e)=>{
         // Verify if its the first time that the user are trying to move the snake
         if( !itMove && e.key !== "ArrowRight" ){
+            priority.setPriority(snakeBody, config.possibleKeys[e.key], lastKeyDirection)
+            
             lastKeyDirection = config.possibleKeys[e.key] 
             itMove = true;
-
-            priority.setPriority(snakeBody, config.possibleKeys[e.key])
-            console.log(priority.order)
         }
         
 
         // Verify if its not the first time that the user move the snake and if its not the same key as the last
         else if ( itMove && lastKeyDirection !== config.possibleKeys[e.key] ){
-            lastKeyDirection = config.possibleKeys[e.key] 
+            priority.setPriority(snakeBody, config.possibleKeys[e.key], lastKeyDirection)
 
-            priority.setPriority(snakeBody, config.possibleKeys[e.key])
+            lastKeyDirection = config.possibleKeys[e.key] 
         }
     })
 
@@ -40,7 +39,7 @@ const gameInit = ()=>{
            move('right', snakeHead, snakeBody, snakeInfo)
 
         else{
-            move(lastKeyDirection, snakeHead, snakeBody, snakeInfo)
+            move(lastKeyDirection, snakeHead, snakeBody, snakeInfo, priority.nextMove())
 
             priority.decreasePriority()
         }
