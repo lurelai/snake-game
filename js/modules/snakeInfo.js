@@ -27,7 +27,7 @@ export function snakeInfo(snakeHead, snakeBody, snakeAll){
             returnIt.body.column.end.push(i.style.gridColumnEnd)
 
             returnIt.body.row.start.push(i.style.gridRowStart)
-            returnIt.body.row.end.push(i.style.gridRowEnd)
+            returnIt.body.row.end.push(i.style.gridRowStart)
         }
     }
     return returnIt 
