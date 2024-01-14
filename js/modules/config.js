@@ -18,5 +18,12 @@ export const config = {
         ArrowDown: 'down',
         ArrowLeft: 'left',
         ArrowRight: 'right',
+    },
+
+    oppositeKeys: {
+        up: 'down',
+        down: 'up',
+        right: 'left',
+        left: 'right'
     }
 }
