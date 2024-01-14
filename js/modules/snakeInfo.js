@@ -1,4 +1,4 @@
-export function snakeInfo(snakeHead, snakeBody, snakeAll){  
+export function snakeInfo(snakeHead, snakeBody){  
     let returnIt = {
         head: { column: { start: null, end: null }, row: { start: null, end: null } },
         

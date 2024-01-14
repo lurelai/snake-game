@@ -3,7 +3,6 @@ import { config } from './modules/config.js'
 import { move } from './modules/move.js'
 import { priority } from './modules/priority.js'
 
-const allSnake = document.querySelectorAll('.snake')
 const snakeHead = document.querySelector('#head')
 const snakeBody = document.querySelectorAll('.body')
 
@@ -13,13 +12,15 @@ config.setInitialConfig(snakeHead, snakeBody)
 
 const gameInit = ()=>{
     let itMove = false
-    let lastKeyDirection = 'right' 
+    let lastKeyDirection = 'right'  
 
     document.addEventListener('keydown', (e)=>{
         // Verify if its the first time that the user are trying to move the snake
-        if( !itMove && e.key !== "ArrowRight" ){
+        if ( !config.possibleKeys[e.key] ){}
+
+        else if( !itMove ){
             priority.setPriority(snakeBody, config.possibleKeys[e.key], lastKeyDirection)
-            
+            console.log('ok') 
             lastKeyDirection = config.possibleKeys[e.key] 
             itMove = true;
         }
@@ -30,19 +31,18 @@ const gameInit = ()=>{
             priority.setPriority(snakeBody, config.possibleKeys[e.key], lastKeyDirection)
 
             lastKeyDirection = config.possibleKeys[e.key] 
-        }
-    })
+        }      
+    }) 
 
 
     setInterval(()=>{
-        if (!itMove)
-           move('right', snakeHead, snakeBody, snakeInfo)
+        move(lastKeyDirection, 
+            {head: snakeHead, body: snakeBody}, 
+            {headInfo: snakeInfo(snakeHead, null).head, 
+            bodyInfo: snakeInfo(null, snakeBody).body}, 
+            priority.nextMove())
 
-        else{
-            move(lastKeyDirection, snakeHead, snakeBody, snakeInfo, priority.nextMove())
-
-            priority.decreasePriority()
-        }
+        priority.decreasePriority()
     } ,1000)
 }
 
