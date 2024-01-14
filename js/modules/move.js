@@ -1,65 +1,40 @@
-export function move(moveTo, snakes, {headInfo, bodyInfo}, toMove){
-   
-    console.log(headInfo, bodyInfo)
-   
-    let whichGridTypeUse = {
-        right: ["gridColumnStart", "gridColumnEnd", "column"],
-        left: ["gridColumnStart", "gridColumnEnd", "column"],
-        up: ["gridRowStart", "gridRowEnd", "row"],
-        down: ["gridRowStart", "gridRowEnd", "row"]
+function moveJustOneElement(elementToMove, whereToMove){
+    switch (whereToMove){
+        case 'right': 
+            elementToMove.style.gridColumnStart = Number(elementToMove.style.gridColumnStart)+1
+            elementToMove.style.gridColumnEnd = Number(elementToMove.style.gridColumnEnd)+1
+            break;
+
+        case 'left':
+            elementToMove.style.gridColumnStart = Number(elementToMove.style.gridColumnStart)-1
+            elementToMove.style.gridColumnEnd = Number(elementToMove.style.gridColumnEnd)-1
+            break;
+
+        case 'up':
+            elementToMove.style.gridRowStart = Number(elementToMove.style.gridRowStart)-1
+            elementToMove.style.gridRowEnd = Number(elementToMove.style.gridRowEnd)-1
+            break;
+
+        case 'down':
+            elementToMove.style.gridRowStart = Number(elementToMove.style.gridRowStart)+1
+            elementToMove.style.gridRowEnd = Number(elementToMove.style.gridRowEnd)+1
+            break;
     }
+} 
 
-    const moveBody = (isSimple, direction)=>{
-        if(isSimple){
-            let count = 0;
+function moveAllTheBodyToRight(head, body){
+    head.style.gridColumnStart = Number(head.style.gridColumnStart)+1
+    head.style.gridColumnEnd = Number(head.style.gridColumnEnd)+1
 
-            for(let i of snakes.body){
-                if(direction === "right" || direction === "down"){
-                    i.style[whichGridTypeUse[direction][0]] = Number(bodyInfo[whichGridTypeUse[direction][2]].start[count])+1
-                    i.style[whichGridTypeUse[direction][1]] = Number(bodyInfo[whichGridTypeUse[direction][2]].end[count])+1
-                } else {
-                    i.style[whichGridTypeUse[direction][0]] = Number(bodyInfo[whichGridTypeUse[direction][2]].start[count])-1
-                    i.style[whichGridTypeUse[direction][1]] = Number(bodyInfo[whichGridTypeUse[direction][2]].end[count])-1
-                }
-                count++;
-            }
-        } 
+    for(let i of body){
+        i.style.gridColumnStart = Number(i.style.gridColumnStart)+1
+        i.style.gridColumnEnd = Number(i.style.gridColumnEnd)+1
     }
-
-    let actions = {
-        right: ()=>{ 
-            // Move the head
-            snakes.head.style.gridColumnStart = Number(headInfo.column.start)+1
-            snakes.head.style.gridColumnEnd = Number(headInfo.column.end)+1
-
-            moveBody(true, 'right')
-        },
-        
-        left: ()=>{ 
-            // Move the head
-            snakes.head.style.gridColumnStart = Number(headInfo.column.start)-1
-            snakes.head.style.gridColumnEnd = Number(headInfo.column.end)-1
-
-            moveBody(true, 'left')
-        },
-
-        up: ()=>{ 
-            // Move the head
-            snakes.head.style.gridRowStart = Number(headInfo.row.start)-1
-            snakes.head.style.gridRowEnd = Number(headInfo.row.end)-1
-
-            moveBody(true, 'up')
-        },
-
-        down: ()=>{ 
-            // Move the head
-            snakes.head.style.gridRowStart = Number(headInfo.row.start)+1
-            snakes.head.style.gridRowEnd = Number(headInfo.row.end)+1
-
-            moveBody(true, 'down')
-        },
-    }
-
-    if(moveTo)
-        //actions[moveTo]()
 }
+
+export function move(moveTo, snakes, {headInfo, bodyInfo}, {nextMove, order}, itGameInit){
+    if(!itGameInit){
+        moveAllTheBodyToRight(snakes.head, snakes.body)
+    }
+}
+

@@ -6,7 +6,6 @@ import { priority } from './modules/priority.js'
 const snakeHead = document.querySelector('#head')
 const snakeBody = document.querySelectorAll('.body')
 
-console.log(snakeBody)
 // Initial config
 config.setInitialConfig(snakeHead, snakeBody)
 
@@ -40,7 +39,9 @@ const gameInit = ()=>{
             {head: snakeHead, body: snakeBody}, 
             {headInfo: snakeInfo(snakeHead, null).head, 
             bodyInfo: snakeInfo(null, snakeBody).body}, 
-            priority.nextMove())
+            {nextMove: priority.nextMove(), order: priority.order},
+            itMove
+        )
 
         priority.decreasePriority()
     } ,1000)
