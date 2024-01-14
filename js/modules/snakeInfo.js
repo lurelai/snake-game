@@ -1,12 +1,10 @@
-export function snakeInfo(snakeHead, snakeBody){  
+export function snakeInfo(snakeHead, snakeBody, allSnake){  
     let returnIt = {
         head: { column: { start: null, end: null }, row: { start: null, end: null } },
         
-        body: {
-            column: { start: [ ], end: [ ] },
+        body: [],
 
-            row: { start: [ ], end: [ ] }
-        }
+        all: [],
 
     }
     
@@ -22,13 +20,40 @@ export function snakeInfo(snakeHead, snakeBody){
     // modifie all about the snakeBody
     if ( snakeBody ){
         // set the "start" and the "end" in the returIt var
-        for(let i of snakeBody){
-            returnIt.body.column.start.push(i.style.gridColumnStart)
-            returnIt.body.column.end.push(i.style.gridColumnEnd)
+        for(let element of snakeBody){
+            returnIt.body.push({ 
+                element,
 
-            returnIt.body.row.start.push(i.style.gridRowStart)
-            returnIt.body.row.end.push(i.style.gridRowStart)
+                column: {
+                    start: element.style.gridColumnStart,
+                    end: element.style.gridColumnEnd
+                },
+
+                row: {
+                    start: element.style.gridRowStart,
+                    end: element.style.gridRowEnd
+                }
+            })
         }
     }
+
+    if ( allSnake ){
+        for(let element of allSnake){
+            returnIt.all.push({ 
+                element,
+
+                column: {
+                    start: element.style.gridColumnStart,
+                    end: element.style.gridColumnEnd
+                },
+
+                row: {
+                    start: element.style.gridRowStart,
+                    end: element.style.gridRowEnd
+                }
+            })
+        }
+    }
+
     return returnIt 
 }
