@@ -2,20 +2,21 @@ import { snakeInfo } from './modules/snakeInfo.js'
 import { config } from './modules/config.js'
 import { move } from './modules/move.js'
 import { foodConfig } from './modules/food.js' 
+import { seeCrashes } from './modules/crash.js' 
 
-const snakeHead = document.querySelector('#head')
-const snakeBody = document.querySelectorAll('.body')
+const findSnakeHead = ()=>{return document.querySelector('#head')}
+const findSnakeBody = ()=>{return document.querySelectorAll('.body')}
 const findAllSnake = ()=>{ return document.querySelectorAll('.snake') }
 const snakeCage = document.querySelector('.snake-cage')
 
 
 // Initial config
-config.setInitialConfig(snakeHead, snakeBody, foodConfig(snakeCage, findAllSnake(), snakeHead, {}).setFood)
 
 
 const gameInit = ()=>{
     let itMove = false
     let commanded = 'right'  
+    config.setInitialConfig(findSnakeHead(), findSnakeBody(), foodConfig(snakeCage, findAllSnake(), findSnakeHead(), {}).setFood)
 
     document.addEventListener('keydown', (e)=>{
         // Verify if its the first time that the user are trying to move the snake
@@ -33,10 +34,21 @@ const gameInit = ()=>{
     }) 
 
     setInterval(()=>{
-        move({snakeHead, snakeBody}, commanded, snakeInfo(null, null, findAllSnake()).all)
+        move({snakeHead: findSnakeHead(), snakeBody: findSnakeBody()}, commanded, snakeInfo(null, null, findAllSnake()).all)
+        foodConfig(snakeCage, findAllSnake(), findSnakeHead(), { direction: commanded, lastElement: findSnakeBody()[0] }).pickUpTheFood()
+        seeCrashes(findSnakeHead(), findSnakeBody(), ()=>{ 
+            snakeCage.innerHTML = ` 
+            <div class="snake body" style="grid-area: 7 / 2 / 8 / 3;"></div> 
+            <div class="snake body" style="grid-area: 7 / 2 / 8 / 3;"></div>
+            <div class="snake body" style="grid-area: 7 / 3 / 8 / 4;"></div>
+            <div class="snake" id="head" style="grid-area: 7 / 4 / 8 / 5;"></div>
+            ` 
 
-        foodConfig(snakeCage, findAllSnake(), snakeHead, { direction: commanded, lastElement: snakeBody[0] }).pickUpTheFood()
-    } ,99)
+            config.setInitialConfig(findSnakeHead(), findSnakeBody(), foodConfig(snakeCage, findAllSnake(), findSnakeHead(), {}).setFood)
+        })
+    } , 100)
+
+    console.log('ok')
 }
 
 gameInit();
