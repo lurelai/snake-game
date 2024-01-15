@@ -1,5 +1,5 @@
 export const config = { 
-    setInitialConfig: (snakeHead, snakeBody, { setFood, snakeCage })=>{
+    setInitialConfig: (snakeHead, snakeBody, { setFood, snakeCage, allSnake})=>{
         let count = 1;
         
         // Set the inital config about the snakeHead
@@ -13,7 +13,7 @@ export const config = {
         }
         
         // set a random food
-        setFood(snakeCage)
+        setFood(snakeCage, allSnake)
     },
 
     possibleKeys: {

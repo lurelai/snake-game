@@ -11,7 +11,7 @@ const snakeCage = document.querySelector('.snake-cage')
 
 
 // Initial config
-config.setInitialConfig(snakeHead, snakeBody, { setFood: foodConfig.setFood, snakeCage})
+config.setInitialConfig(snakeHead, snakeBody, { setFood: foodConfig.setFood, snakeCage, allSnake})
 
 const gameInit = ()=>{
     let itMove = false
