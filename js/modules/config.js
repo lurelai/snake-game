@@ -1,5 +1,5 @@
 export const config = { 
-    setInitialConfig: (snakeHead, snakeBody)=>{
+    setInitialConfig: (snakeHead, snakeBody, { setFood, snakeCage })=>{
         let count = 1;
         
         // Set the inital config about the snakeHead
@@ -11,6 +11,9 @@ export const config = {
             i.style.gridColumn = `${count} / ${++count}` 
             i.style.gridRow = `7 / 8 `
         }
+        
+        // set a random food
+        setFood(snakeCage)
     },
 
     possibleKeys: {

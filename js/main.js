@@ -1,13 +1,17 @@
 import { snakeInfo } from './modules/snakeInfo.js'
 import { config } from './modules/config.js'
 import { move } from './modules/move.js'
+import { foodConfig } from './modules/food.js' 
 
 const snakeHead = document.querySelector('#head')
 const snakeBody = document.querySelectorAll('.body')
 const allSnake = document.querySelectorAll('.snake')
+const food = document.querySelector('.food')
+const snakeCage = document.querySelector('.snake-cage')
+
 
 // Initial config
-config.setInitialConfig(snakeHead, snakeBody)
+config.setInitialConfig(snakeHead, snakeBody, { setFood: foodConfig.setFood, snakeCage})
 
 const gameInit = ()=>{
     let itMove = false

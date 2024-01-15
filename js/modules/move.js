@@ -1,24 +1,42 @@
 function moveJustOneElement(element, whereToGo){
-    switch(whereToGo){
-        case 'right':
-            element.style.gridColumnStart = Number(element.style.gridColumnStart)+1
-            element.style.gridColumnEnd = Number(element.style.gridColumnEnd)+1
-            break;
+    if(element.style.gridColumnStart === '32' && whereToGo === 'right' ){
+        element.style.gridColumn = "1 / 2"
+    }
 
-        case 'left':
-            element.style.gridColumnStart = Number(element.style.gridColumnStart)-1
-            element.style.gridColumnEnd = Number(element.style.gridColumnEnd)-1
-            break;
+    else if(element.style.gridColumnStart === '1' && whereToGo === 'left'){
+        element.style.gridColumn = "32 / 33"
+    }
 
-        case 'up':
-            element.style.gridRowStart = Number(element.style.gridRowStart)-1
-            element.style.gridRowEnd = Number(element.style.gridRowEnd)-1
-            break;
+    else if(element.style.gridRowStart === '1' && whereToGo === 'up'){
+        element.style.gridRow = "16 / 17"
+    }
 
-        case 'down':
-            element.style.gridRowStart = Number(element.style.gridRowStart)+1
-            element.style.gridRowEnd = Number(element.style.gridRowEnd)+1
-            break;
+    else if(element.style.gridRowStart === '16' && whereToGo === 'down'){
+        element.style.gridRow = "1 / 2"
+    }
+
+    else{
+        switch(whereToGo){
+            case 'right':
+                element.style.gridColumnStart = Number(element.style.gridColumnStart)+1
+                element.style.gridColumnEnd = Number(element.style.gridColumnEnd)+1
+                break;
+
+            case 'left':
+                element.style.gridColumnStart = Number(element.style.gridColumnStart)-1
+                element.style.gridColumnEnd = Number(element.style.gridColumnEnd)-1
+                break;
+
+            case 'up':
+                element.style.gridRowStart = Number(element.style.gridRowStart)-1
+                element.style.gridRowEnd = Number(element.style.gridRowEnd)-1
+                break;
+
+            case 'down':
+                element.style.gridRowStart = Number(element.style.gridRowStart)+1
+                element.style.gridRowEnd = Number(element.style.gridRowEnd)+1
+                break;
+        }
     }
 }
 
