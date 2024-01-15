@@ -48,7 +48,6 @@ function moveTheBody(allSnakeInfo){
         if(count === whenToStop)
             break;
 
-
         allSnakeInfo[i].element.style.gridColumn = allSnakeInfo[Number(i)+1].element.style.gridColumn
         allSnakeInfo[i].element.style.gridRow = allSnakeInfo[Number(i)+1].element.style.gridRow
 
@@ -58,8 +57,7 @@ function moveTheBody(allSnakeInfo){
 
 
 export function move({snakeHead, snakeBody}, commanded, allSnakeInfo){
-
-    moveTheBody(allSnakeInfo)
-    moveJustOneElement(snakeHead, commanded)
+        moveTheBody(allSnakeInfo)
+        moveJustOneElement(snakeHead, commanded)
 }
 

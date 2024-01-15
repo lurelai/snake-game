@@ -5,13 +5,13 @@ import { foodConfig } from './modules/food.js'
 
 const snakeHead = document.querySelector('#head')
 const snakeBody = document.querySelectorAll('.body')
-const allSnake = document.querySelectorAll('.snake')
-const food = document.querySelector('.food')
+const findAllSnake = ()=>{ return document.querySelectorAll('.snake') }
 const snakeCage = document.querySelector('.snake-cage')
 
 
 // Initial config
-config.setInitialConfig(snakeHead, snakeBody, { setFood: foodConfig.setFood, snakeCage, allSnake})
+config.setInitialConfig(snakeHead, snakeBody, foodConfig(snakeCage, findAllSnake(), snakeHead, {}).setFood)
+
 
 const gameInit = ()=>{
     let itMove = false
@@ -33,9 +33,10 @@ const gameInit = ()=>{
     }) 
 
     setInterval(()=>{
-        move({snakeHead, snakeBody}, commanded, snakeInfo(null, null, allSnake).all)
+        move({snakeHead, snakeBody}, commanded, snakeInfo(null, null, findAllSnake()).all)
 
-    } ,150)
+        foodConfig(snakeCage, findAllSnake(), snakeHead, { direction: commanded, lastElement: snakeBody[0] }).pickUpTheFood()
+    } ,99)
 }
 
 gameInit();
